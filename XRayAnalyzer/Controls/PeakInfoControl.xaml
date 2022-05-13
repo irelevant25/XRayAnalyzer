@@ -1,0 +1,226 @@
+﻿<UserControl
+    x:Class="XRayAnalyzer.Controls.PeakInfoControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:XRayAnalyzer.Objects.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XRayAnalyzer.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="#FFF"
+    d:DesignHeight="331"
+    d:DesignWidth="251"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converter:ChannelToEnergyConverter x:Key="ChannelToEnergyConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Selected area/peak heading  -->
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="Selected area/peak:" />
+
+        <!--  Peak value label/label  -->
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Peak value:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="peakValueLabel"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.HighestSignalPoint.Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Peak energy label/label  -->
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Peak energy:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="peakEnergyLabel"
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.HighestSignalPoint.Energy, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Peak channel label/label  -->
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Peak channel:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="peakChannelLabel"
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.HighestSignalPoint.Channel, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Left base energy label/label  -->
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Left base energy:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="leftBaseEnergyLabel"
+            Grid.Row="4"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.LeftBaseSignalPoint.Energy, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Right base energy label/label  -->
+        <TextBlock
+            Grid.Row="5"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Right base energy:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="rightBaseEnergyLabel"
+            Grid.Row="5"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.RightBaseSignalPoint.Energy, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Left base channel label/label  -->
+        <TextBlock
+            Grid.Row="6"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Left base channel:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="leftBaseChannelLabel"
+            Grid.Row="6"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.LeftBaseSignalPoint.Channel, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Right base channel label/label  -->
+        <TextBlock
+            Grid.Row="7"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Right base channel:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="rightBaseChannelLabel"
+            Grid.Row="7"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.RightBaseSignalPoint.Channel, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Gross area label/label  -->
+        <TextBlock
+            Grid.Row="8"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Gross area:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="grossAreaLabel"
+            Grid.Row="8"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.GrossArea, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Net area label/label  -->
+        <TextBlock
+            Grid.Row="9"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Net area:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="netAreaLabel"
+            Grid.Row="9"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.NetArea, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+
+        <!--  Quantity  -->
+        <TextBlock
+            Grid.Row="10"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Quantity:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            x:Name="quantityLabel"
+            Grid.Row="10"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=SelectedPeak.Quantity, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            TextWrapping="Wrap" />
+    </Grid>
+</UserControl>

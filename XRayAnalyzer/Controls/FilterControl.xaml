@@ -1,0 +1,181 @@
+﻿<UserControl
+    x:Class="XRayAnalyzer.Controls.FilterControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:XRayAnalyzer.Objects.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XRayAnalyzer.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:objects="clr-namespace:XRayAnalyzer.Objects"
+    d:Background="White"
+    d:DesignHeight="1085"
+    d:DesignWidth="235"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converter:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+        <converter:BooleanObjectConverter x:Key="BooleanObjectConverter" />
+        <converter:BooleanVisibilityCollapsedConverter x:Key="BooleanVisibilityCollapsedConverter" />
+    </UserControl.Resources>
+
+    <Grid
+        Grid.Row="2"
+        Grid.Column="1"
+        Margin="15,0,16,15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Column name  -->
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Column name:" />
+        <ComboBox
+            Grid.Row="0"
+            Grid.Column="1"
+            MinWidth="80"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            ItemsSource="{Binding Path=Filter.ColumnNames, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            SelectedItem="{Binding Path=Filter.SelectedColumnName, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+        <!--  Filter operation  -->
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Filter operation:" />
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            MinWidth="80"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            IsEnabled="{Binding Path=Filter.SelectedColumnName, Converter={StaticResource BooleanObjectConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            SelectedItem="{Binding Path=Filter.SelectedFilterOperation, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <ComboBoxItem Content="{Binding Path=(objects:StringsResource.EqualFilterOperation)}" IsSelected="{Binding Path=Filter.IsEqual, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <ComboBoxItem
+                Content="{Binding Path=(objects:StringsResource.ContainsFilterOperation)}"
+                IsSelected="{Binding Path=Filter.IsContains, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Visibility="{Binding Path=Filter.IsString, Converter={StaticResource BooleanVisibilityCollapsedConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <ComboBoxItem
+                Content="{Binding Path=(objects:StringsResource.RangeFilterOperation)}"
+                IsSelected="{Binding Path=Filter.IsRange, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Visibility="{Binding Path=Filter.IsNumber, Converter={StaticResource BooleanVisibilityCollapsedConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <ComboBoxItem
+                Content="{Binding Path=(objects:StringsResource.StartsWithFilterOperation)}"
+                IsSelected="{Binding Path=Filter.IsStartsWith, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Visibility="{Binding Path=Filter.IsString, Converter={StaticResource BooleanVisibilityCollapsedConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <ComboBoxItem
+                Content="{Binding Path=(objects:StringsResource.EndsWithFilterOperation)}"
+                IsSelected="{Binding Path=Filter.IsEndsWith, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Visibility="{Binding Path=Filter.IsString, Converter={StaticResource BooleanVisibilityCollapsedConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        </ComboBox>
+
+        <!--  Single value  -->
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            d:IsEnabled="True"
+            Text="Value:"
+            Visibility="{Binding Path=Filter.IsSingleValue, Converter={StaticResource BooleanVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <TextBox
+            Grid.Row="2"
+            Grid.Column="1"
+            MinWidth="80"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            d:Visibility="Visible"
+            IsEnabled="{Binding Path=Filter.SelectedFilterOperation, Converter={StaticResource BooleanObjectConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Text="{Binding Path=Filter.Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Visibility="{Binding Path=Filter.IsSingleValue, Converter={StaticResource BooleanVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+        <!--  Range value  -->
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            d:Visibility="Hidden"
+            Text="Value from:"
+            Visibility="{Binding Path=Filter.IsRange, Converter={StaticResource BooleanVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <TextBox
+            Grid.Row="2"
+            Grid.Column="1"
+            MinWidth="80"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            d:Visibility="Hidden"
+            Text="{Binding Path=Filter.ValueFrom, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Visibility="{Binding Path=Filter.IsRange, Converter={StaticResource BooleanVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            d:Visibility="Hidden"
+            Text="Value to:"
+            Visibility="{Binding Path=Filter.IsRange, Converter={StaticResource BooleanVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <TextBox
+            Grid.Row="3"
+            Grid.Column="1"
+            MinWidth="80"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            d:Visibility="Hidden"
+            Text="{Binding Path=Filter.ValueTo, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Visibility="{Binding Path=Filter.IsRange, Converter={StaticResource BooleanVisibilityConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+        <!--  Submit button  -->
+        <Button
+            Grid.Row="4"
+            Grid.Column="0"
+            Width="80"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="Button_Submit_Click"
+            Content="Submit"
+            IsEnabled="{Binding Path=Filter.SelectedFilterOperation, Converter={StaticResource BooleanObjectConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+        <!--  Reset button  -->
+        <Button
+            Grid.Row="4"
+            Grid.Column="1"
+            Width="80"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="Button_Reset_Click"
+            Content="Reset" />
+    </Grid>
+</UserControl>

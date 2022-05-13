@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="XRayAnalyzer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Language" Type="System.String" Scope="User">
+      <Value Profile="(Default)">LanguageEN</Value>
+    </Setting>
+    <Setting Name="View" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SpectrumProcessingView</Value>
+    </Setting>
+    <Setting Name="LanguagePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">./Languages</Value>
+    </Setting>
+    <Setting Name="LogingPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">./Logs</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

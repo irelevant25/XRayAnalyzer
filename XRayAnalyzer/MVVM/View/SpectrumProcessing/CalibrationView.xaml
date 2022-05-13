@@ -1,0 +1,288 @@
+﻿<UserControl
+    x:Class="XRayAnalyzer.MVVM.View.SpectrumProcessing.CalibrationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:XRayAnalyzer.Controls"
+    xmlns:converter="clr-namespace:XRayAnalyzer.Objects.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XRayAnalyzer.MVVM.View.SpectrumProcessing"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:XRayAnalyzer.MVVM.ViewModel"
+    d:Background="#FFF"
+    d:DesignHeight="660"
+    d:DesignWidth="250"
+    IsVisibleChanged="UserControl_IsVisibleChanged"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converter:BooleanObjectConverter x:Key="BooleanObjectConverter" />
+        <converter:BooleanAndConverter x:Key="BooleanAndConverter" />
+        <converter:NumberConditionalConverter x:Key="NumberConditionalConverter" From="2" />
+    </UserControl.Resources>
+
+    <Grid
+        Grid.Row="0"
+        Margin="0,0,15,0"
+        DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Calibration point  -->
+        <TextBlock
+            Grid.Row="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Peak channel:"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="textBoxChannel"
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            Text="{Binding Path=WpfPlotControl.SelectedPeak.HighestSignalPoint.Channel}" />
+
+        <TextBlock
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Element:"
+            TextWrapping="Wrap" />
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            DisplayMemberPath="Info.Symbol"
+            ItemsSource="{Binding Path=ViewModel.Elements}"
+            SelectedItem="{Binding Path=ViewModel.CalibrationElementSelected, Mode=TwoWay}" />
+
+        <TextBlock
+            Grid.Row="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Line:"
+            TextWrapping="Wrap" />
+        <ComboBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            DisplayMemberPath="Line"
+            IsEnabled="{Binding Path=ViewModel.CalibrationElementSelected, Converter={StaticResource BooleanObjectConverter}}"
+            ItemsSource="{Binding Path=ViewModel.CalibrationElementSelected.Lines}"
+            SelectedItem="{Binding Path=ViewModel.CalibrationLineSelected, Mode=TwoWay}" />
+
+        <TextBlock
+            Grid.Row="3"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Energy:"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="textBoxEnergy"
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.CalibrationLineSelected.Energy, Mode=TwoWay}" />
+
+        <!--  Add calibration point button  -->
+        <Button
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Width="160"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="Button_AddCalibrationPoint_Click"
+            Content="Add peak">
+            <Button.IsEnabled>
+                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                    <Binding ElementName="textBoxChannel" Path="Text" />
+                    <Binding ElementName="textBoxEnergy" Path="Text" />
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
+
+        <!--  Remove calibration point button  -->
+        <Button
+            Grid.Row="5"
+            Grid.Column="0"
+            Width="140"
+            Height="Auto"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="Button_DeleteCalibrationPoint_Click"
+            IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridCalibrationPoints, Converter={StaticResource BooleanObjectConverter}}">
+            <TextBlock
+                Text="Remove selected point"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+        </Button>
+        <Button
+            Grid.Row="5"
+            Grid.Column="1"
+            Width="80"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="Button_CancelCalibrationPoint_Click"
+            Content="Cancel"
+            IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridCalibrationPoints, Converter={StaticResource BooleanObjectConverter}}" />
+
+        <!--  Calibration points table  -->
+        <DataGrid
+            x:Name="DataGridCalibrationPoints"
+            Grid.Row="6"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="2"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
+            EnableColumnVirtualization="False"
+            EnableRowVirtualization="False"
+            HeadersVisibility="Column"
+            IsReadOnly="True"
+            ItemsSource="{Binding Path=ViewModel.Calibration.CalibrationPoints}"
+            SelectedItem="{Binding Path=ViewModel.CalibrationPointSelected}"
+            SelectionMode="Single"
+            SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Channel}"
+                    Header="Channel" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=ElementInfo.Symbol}"
+                    Header="Element" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=ElementLine.Line}"
+                    Header="Line" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=ElementLine.Energy}"
+                    Header="Energy" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--  Calibrate button  -->
+        <Button
+            Grid.Row="10"
+            Grid.ColumnSpan="2"
+            Width="160"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="Button_Calibrate_Click"
+            Content="Calibrate"
+            IsEnabled="{Binding Path=ViewModel.Calibration.CalibrationPoints, Converter={StaticResource NumberConditionalConverter}}" />
+
+        <!--  Calibration - Slope  -->
+        <TextBlock
+            Grid.Row="11"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Slope:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="11"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.Calibration.Slope}" />
+
+        <!--  Calibration - Intercept  -->
+        <TextBlock
+            Grid.Row="12"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Intercept:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="12"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.Calibration.Intercept}" />
+
+        <!--  Calibration - Pearson correlation coefficient  -->
+        <TextBlock
+            Grid.Row="13"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Pearson correlation coefficient:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="13"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.Calibration.Rvalue}" />
+
+        <!--  Calibration - Standard error of the gradient  -->
+        <TextBlock
+            Grid.Row="14"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Standard error of gradient:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="14"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.Calibration.Stderr}" />
+
+        <!--  Calibration - Standard error of the intercept  -->
+        <TextBlock
+            Grid.Row="15"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Standard error of the intercept:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="15"
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.Calibration.InterceptStderr}" />
+    </Grid>
+</UserControl>

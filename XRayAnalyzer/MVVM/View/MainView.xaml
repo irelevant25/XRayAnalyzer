@@ -1,0 +1,69 @@
+﻿<Window
+    x:Class="XRayAnalyzer.MVVM.View.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XRayAnalyzer"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:objects="clr-namespace:XRayAnalyzer.Objects"
+    xmlns:view="clr-namespace:XRayAnalyzer.MVVM.View.SpectrumProcessing"
+    xmlns:viewmodel="clr-namespace:XRayAnalyzer.MVVM.ViewModel"
+    Title="XRayAnalyzer"
+    Width="1600"
+    Height="1200"
+    Closing="Window_Closing"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Menu
+            Height="22"
+            BorderBrush="Black"
+            BorderThickness="0,0,0,0.5"
+            VerticalAlignment="Top"
+            FlowDirection="LeftToRight">
+            <MenuItem
+                x:Name="MenuFile"
+                Padding="5,1,5,3"
+                d:Header="File"
+                Header="{Binding Path=(objects:StringsResource.MenuFile)}" />
+            <MenuItem
+                x:Name="MenuLanguage"
+                Padding="5,1,5,3"
+                d:Header="Language"
+                Header="{Binding Path=(objects:StringsResource.MenuLanguage)}" />
+            <MenuItem
+                x:Name="MenuView"
+                Padding="5,1,5,3"
+                d:Header="View"
+                Header="{Binding Path=(objects:StringsResource.MenuView)}" />
+            <MenuItem
+                x:Name="DataView"
+                Padding="5,1,5,3"
+                d:Header="View"
+                Header="{Binding Path=(objects:StringsResource.DataView)}" />
+        </Menu>
+
+        <Grid Margin="0, 22, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ContentControl
+                Grid.RowSpan="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Content="{Binding Path=SelectedView}" />
+
+            <d:DockPanel
+                Grid.RowSpan="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
+                <view:SpectrumProcessingView />
+            </d:DockPanel>
+        </Grid>
+    </Grid>
+
+</Window>
+

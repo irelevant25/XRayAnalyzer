@@ -1,0 +1,214 @@
+﻿<UserControl
+    x:Class="XRayAnalyzer.MVVM.View.SpectrumProcessing.LoadFileView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:XRayAnalyzer.Controls"
+    xmlns:converter="clr-namespace:XRayAnalyzer.Objects.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XRayAnalyzer.MVVM.View.SpectrumProcessing"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:objects="clr-namespace:XRayAnalyzer.Objects"
+    xmlns:view="clr-namespace:XRayAnalyzer.MVVM.View.SpectrumProcessing"
+    d:Background="#FFF"
+    d:DesignHeight="660"
+    d:DesignWidth="250"
+    IsVisibleChanged="UserControl_IsVisibleChanged"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converter:BooleanYesNoConverter x:Key="BooleanYesNoConverter" />
+        <converter:NullStringConverter x:Key="NullStringConverter" />
+        <converter:BooleanObjectConverter x:Key="BooleanObjectConverter" />
+    </UserControl.Resources>
+
+    <Grid Grid.Row="0" DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Select file  -->
+        <Button
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Width="80"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="Button_SelectFile_Click"
+            Content="Select file" />
+
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.SelectedFile}"
+            TextWrapping="WrapWithOverflow" />
+
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Gain:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.Gain, Converter={StaticResource NullStringConverter}}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Peaks:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.PeaksCount, Converter={StaticResource NullStringConverter}}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Calibrated:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.Calibrated, Converter={StaticResource BooleanYesNoConverter}}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Grid.Row="5"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Background removed:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="5"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.BackgroundRemoved, Converter={StaticResource BooleanYesNoConverter}}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Grid.Row="6"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Sum peaks removed:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="6"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.SumPeaksRemoved, Converter={StaticResource BooleanYesNoConverter}}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Grid.Row="7"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Smoothed:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="7"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.Smoothed, Converter={StaticResource BooleanYesNoConverter}}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Grid.Row="8"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Net extracted:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="8"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.NetExtracted, Converter={StaticResource BooleanYesNoConverter}}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Grid.Row="9"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Qualitative analysis:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="9"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.QualitativeAnalysis, Converter={StaticResource BooleanYesNoConverter}}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Grid.Row="10"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="Quantitative analysis:"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Grid.Row="10"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=ViewModel.QuantitativeAnalysis, Converter={StaticResource BooleanYesNoConverter}}"
+            TextWrapping="Wrap" />
+    </Grid>
+</UserControl>

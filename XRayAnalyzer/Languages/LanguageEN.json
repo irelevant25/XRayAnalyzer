@@ -1,0 +1,36 @@
+{
+  "MenuFile": "File",
+  "SaveFile": "Save file",
+
+  "MenuLanguage": "Language",
+  "LanguageSK": "Slovak",
+  "LanguageEN": "English",
+
+  "MenuView": "View",
+  "SpectrumProcessingView": "Spectrum processing",
+  "AnalysisView": "Analysis",
+
+  "DataView": "Data",
+  "ElementLineDataView": "Elements lines",
+  "DetectorEfficiencyDataView": "Detectors efficiencies",
+  "FluorescentYieldDataView": "Fluorescent yields",
+  "JumpRatioDataView": "Jump ratios",
+  "XrayMassCoefficientDataView": "Xray mass coefficients",
+
+  "LoadFileOperationName": "Load file",
+  "EditPeaksOperationName": "Peaks editing",
+  "CalibrateDataOperationName": "Data calibration",
+  "BackgroundRemovalOperationName": "Background removal",
+  "SumPeaksRemovalOperationName": "Sum peaks removal",
+  "SmoothingOperationName": "Smoothing",
+  "NetExtractionOperationName": "Net extraction",
+
+  "QualitativeOperationName": "Qualitative analysis",
+  "QuantitativeOperationName": "Quantitative analysis",
+
+  "EqualFilterOperation": "Equal",
+  "RangeFilterOperation": "Range",
+  "ContainsFilterOperation": "Contains",
+  "StartsWithFilterOperation": "Start with",
+  "EndsWithFilterOperation": "Ends with"
+}

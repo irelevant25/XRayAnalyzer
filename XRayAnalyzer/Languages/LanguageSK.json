@@ -1,0 +1,36 @@
+﻿{
+  "MenuFile": "Súbor",
+  "SaveFile": "Uložiť",
+
+  "MenuLanguage": "Jazyk",
+  "LanguageSK": "Slovenčina",
+  "LanguageEN": "Angličtina",
+
+  "MenuView": "Zobrazenie",
+  "SpectrumProcessingView": "Spracovanie spektra",
+  "AnalysisView": "Analýza",
+
+  "DataView": "Dáta",
+  "ElementLineDataView": "Prechody prvkov",
+  "DetectorEfficiencyDataViewName": "Efektivity detektorov",
+  "FluorescentYieldDataView": "Fluorescenčné výťažky",
+  "JumpRatioDataView": "Skokové pomery",
+  "XrayMassCoefficientDataView": "Röntgenové hmotnostné koeficienty",
+
+  "LoadFileOperationName": "Načítať súbor",
+  "EditPeaksOperationName": "Úprava vrcholov",
+  "CalibrateDataOperationName": "Kalibrácia dát",
+  "BackgroundRemovalOperationName": "Odstránenie pozadia",
+  "SumPeaksRemovalOperationName": "Odstránenie sumačných vrcholov",
+  "SmoothingOperationName": "Vyhľadenie spektra",
+  "NetExtractionOperationName": "Extrakcia plôch",
+
+  "QualitativeOperationName": "Kvalitatívna analýza",
+  "QuantitativeOperationName": "Kvantitatívna analýza",
+
+  "EqualFilterOperation": "Rovné",
+  "RangeFilterOperation": "Interval",
+  "ContainsFilterOperation": "Obsahuje",
+  "StartsWithFilterOperation": "Začína",
+  "EndsWithFilterOperation": "Končí"
+}

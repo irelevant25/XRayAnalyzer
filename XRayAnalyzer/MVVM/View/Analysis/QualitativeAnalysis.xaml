@@ -1,0 +1,256 @@
+﻿<UserControl
+    x:Class="XRayAnalyzer.MVVM.View.Analysis.QualitativeAnalysis"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:XRayAnalyzer.Controls"
+    xmlns:converter="clr-namespace:XRayAnalyzer.Objects.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XRayAnalyzer.MVVM.View.SpectrumProcessing"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="#FFF"
+    d:DesignHeight="660"
+    d:DesignWidth="250"
+    IsVisibleChanged="UserControl_IsVisibleChanged"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <converter:BooleanObjectConverter x:Key="BooleanObjectConverter" />
+        <converter:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+        <converter:BooleanVisibilityCollapsedConverter x:Key="BooleanVisibilityCollapsedConverter" />
+        <converter:TwoConverters
+            x:Key="InverseBooleanVisibilityConverter"
+            Converter1="{StaticResource InverseBooleanConverter}"
+            Converter2="{StaticResource BooleanVisibilityConverter}" />
+    </UserControl.Resources>
+
+    <Grid
+        Grid.Row="0"
+        Margin="0,0,15,0"
+        DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Energy abs treshold  -->
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                Padding="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="Energy abs treshold:"
+                FontWeight="Bold" />
+            <Slider
+                Name="SliderEnergyAbsTreshold"
+                Grid.Row="1"
+                Grid.Column="0"
+                IsSnapToTickEnabled="True"
+                Maximum="0.1"
+                Minimum="0"
+                TickFrequency="0.01"
+                TickPlacement="BottomRight"
+                Value="{Binding Path=ViewModel.QualitativeAnalysisProperties.EnergyAbsTreshold, Mode=TwoWay}" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="0"
+                Padding="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="{Binding ElementName=SliderEnergyAbsTreshold, Path=Value, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.#####}}" />
+        </Grid>
+
+        <!--  Rate treshold  -->
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                Padding="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="Rate treshold:"
+                FontWeight="Bold" />
+            <Slider
+                Name="SliderRateTreshold"
+                Grid.Row="1"
+                Grid.Column="0"
+                IsSnapToTickEnabled="True"
+                Maximum="0.1"
+                Minimum="0"
+                TickFrequency="0.01"
+                TickPlacement="BottomRight"
+                Value="{Binding Path=ViewModel.QualitativeAnalysisProperties.RateTreshold, Mode=TwoWay}" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="0"
+                Padding="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="{Binding ElementName=SliderRateTreshold, Path=Value, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.#####}}" />
+        </Grid>
+
+        <!--  Run analysis  -->
+        <Button
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Width="160"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="Button_QualitativeAnalysisRun_Click"
+            Content="Run analysis"
+            Visibility="{Binding Path=ViewModel.AnalysisRunning, Mode=TwoWay, Converter={StaticResource InverseBooleanVisibilityConverter}}" />
+        <Button
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Width="160"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Content="Analysis is running"
+            IsEnabled="False"
+            Visibility="{Binding Path=ViewModel.AnalysisRunning, Mode=TwoWay, Converter={StaticResource BooleanVisibilityConverter}}" />
+
+        <!--  Posssible matches  -->
+        <TextBlock
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="Posible matches" />
+        <DataGrid
+            x:Name="DataGridPossibleMatches"
+            Grid.Row="4"
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
+            EnableColumnVirtualization="False"
+            EnableRowVirtualization="False"
+            HeadersVisibility="Column"
+            IsReadOnly="True"
+            ItemsSource="{Binding Path=ViewModel.SelectedQualitativeAnalysisItem.PossibleMatches}"
+            SelectionMode="Single"
+            SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="0.75*"
+                    Binding="{Binding Path=Info.Symbol}"
+                    Header="Ele." />
+                <DataGridTextColumn
+                    Width="0.75*"
+                    Binding="{Binding Path=Element}"
+                    Header="Z" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Line}"
+                    Header="Line" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Energy}"
+                    Header="Energy" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Rate}"
+                    Header="Rate" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--  Best matches  -->
+        <TextBlock
+            Grid.Row="7"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="Best matches" />
+        <DataGrid
+            x:Name="DataGridBestMatches"
+            Grid.Row="8"
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
+            EnableColumnVirtualization="False"
+            EnableRowVirtualization="False"
+            HeadersVisibility="Column"
+            IsReadOnly="True"
+            ItemsSource="{Binding Path=ViewModel.SelectedQualitativeAnalysisItem.BestMatches}"
+            SelectionMode="Single"
+            SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="0.75*"
+                    Binding="{Binding Path=Info.Symbol}"
+                    Header="Ele." />
+                <DataGridTextColumn
+                    Width="0.75*"
+                    Binding="{Binding Path=Element}"
+                    Header="Z" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Line}"
+                    Header="Line" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Energy}"
+                    Header="Energy" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Rate}"
+                    Header="Rate" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
