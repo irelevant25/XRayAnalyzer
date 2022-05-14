@@ -11,6 +11,8 @@ import sklearn.linear_model
 import scipy
 
 
+## author: Md Azimul Haque
+## source: https://github.com/StatguyUser/BaselineRemoval
 class BaselineRemoval():
     '''input_array: A pandas dataframe column provided in input as dataframe['input_df_column']. It can also be a Python list object
     degree: Polynomial degree
