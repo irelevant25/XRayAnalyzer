@@ -51,6 +51,9 @@
     <None Update="Datasets\xray_mass_ceoficient.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\Fe50Cr50.mca">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Languages\LanguageEN.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
