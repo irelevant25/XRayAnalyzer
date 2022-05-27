@@ -7,7 +7,6 @@ import pstats
 import base64
 import numpy
 import json
-import sklearn.linear_model
 import scipy
 
 
@@ -19,7 +18,6 @@ class BaselineRemoval():
     '''     
     def __init__(self,input_array):
         self.input_array=input_array
-        self.lin=sklearn.linear_model.LinearRegression()
 
     def poly(self,input_array_for_poly,degree_for_poly):
         '''qr factorization of a matrix. q` is orthonormal and `r` is upper-triangular.
@@ -55,7 +53,7 @@ class BaselineRemoval():
         nrep=0
 
         while (criteria>=gradient) and (nrep<=repitition):
-            ypred=self.lin.fit(polx,yold).predict(polx)
+            ypred=predict(linear_regression(polx,yold), polx)
             ywork=numpy.array(numpy.minimum(yorig,ypred))
             criteria=sum(numpy.abs((ywork-yold)/yold))
             yold=ywork
@@ -80,18 +78,21 @@ class BaselineRemoval():
         ngradient=1
 
         polx=self.poly(list(range(1,len(yorig)+1)),degree)
-        ypred=self.lin.fit(polx,yold).predict(polx)
+        ypred=predict(linear_regression(polx,yold), polx)
         Previous_Dev=numpy.std(yorig-ypred)
 
         #iteration1
         yold=yold[yorig<=(ypred+Previous_Dev)]
         polx_updated=polx[yorig<=(ypred+Previous_Dev)]
         ypred=ypred[yorig<=(ypred+Previous_Dev)]
+        regression=None
 
         for i in range(2,repitition+1):
             if i>2:
                 Previous_Dev=DEV
-            ypred=self.lin.fit(polx_updated,yold).predict(polx_updated)
+                
+            regression=linear_regression(polx_updated,yold)
+            ypred=predict(regression, polx_updated)
             DEV=numpy.std(yold-ypred)
 
             if numpy.abs((DEV-Previous_Dev)/DEV) < gradient:
@@ -100,7 +101,7 @@ class BaselineRemoval():
                 for i in range(len(yold)):
                     if yold[i]>=ypred[i]+DEV:
                         yold[i]=ypred[i]+DEV
-        baseline=self.lin.predict(polx)
+        baseline=predict(regression, polx)
         corrected=yorig-baseline
         return corrected
 
