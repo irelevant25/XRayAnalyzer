@@ -13,14 +13,13 @@ if IN_PRODUCTION is True:
         '',
         os.path.join(os.getcwd(), "Scripts"),
         os.path.join(os.getcwd(), "python39"),
-        os.path.join(os.getcwd(), "Lib\\site-packages")
+        os.path.join(os.getcwd(), "lib\\site-packages")
     ]
 ## SPECIAL CONFIGURATION END
 
 
 import math
 import json
-import pkgutil
 import numpy as np
 from shlex import split
 from scipy import integrate
@@ -32,7 +31,7 @@ from scipy.signal import savgol_filter
 from scipy import stats
 from scipy.ndimage import gaussian_filter1d
 from scipy.signal import find_peaks
-from scipy.optimize import fsolve
+from sympy import symbols, nsolve
 
 
 ## Save location of this file into path, app using portable python with different location as script.
@@ -356,13 +355,18 @@ def quantitative_analysis(xray_mass_coefficients, detector_efficiencies, fluores
         concentrations = np.append(concentrations, c2)
         concentrations_equations.append(concentrations)
 
-    # fsolve(equations, (...)) - druhy parameter fsolve su predikovane hodnoty, je potrebne volit parametre co najpresnejsie,
+    # nsolve(equations, predicted_values) - druhy parameter nsolve su predikovane hodnoty, 
+    # je potrebne volit parametre co najpresnejsie,
     # aby algoritmus nenasiel iba lokalne minimum ale globalne minimum
-    amounts = list(fsolve(quantitative_analysis_equation, tuple([1] * (number_of_elements + 1)), concentrations_equations))
+    variables = symbols('a0:%d, GdN1'%len(concentrations_equations), real=True)
+    equations = quantitative_analysis_equation(variables, concentrations_equations)
+    amounts = nsolve(equations, variables, [1] * (number_of_elements) + [100000000])
+    amounts = np.array(amounts.tolist()).astype(np.float64)
 
     result = []
-    for index in range(len(elements_energies)):
-        result.append({"energy": elements_energies[index], "amount": amounts[index]})
+    if amounts is not None:
+        for index in range(len(elements_energies)):
+            result.append({"energy": elements_energies[index], "amount": amounts[index][0]})
 
     return json.dumps({"data": result}, cls = scripts_helper.NumpyEncoder)
 
