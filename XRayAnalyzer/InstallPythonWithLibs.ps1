@@ -69,9 +69,10 @@ Remove-Item -Path "$(".\")$($pythonVersion).zip" -Confirm:$false -Force
 Remove-Item -Path "$(".\")get-pip.py" -Confirm:$false -Force
 
 # installing libraries for XRayAnalyzer
-$libraries = "numpy","scipy"
+$libraries = "numpy","scipy", "sympy"
 foreach ($library in $libraries)
 {
+	"Installing " + $library
     $Proc = Start-Process -NoNewWindow -PassThru ".\python.exe" -Argumentlist "-m pip install $library"
     $Proc.WaitForExit()
 }
